@@ -5,3 +5,7 @@
 然后 `uv sync`
 
 测试代码生成 `uv run test_api.py`
+
+docker 部署
+
+docker run --env-file settings.env --rm -it -p 8000:8000 wynemo/image-edit
