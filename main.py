@@ -3,6 +3,8 @@ from datetime import datetime
 from typing import Any, Dict, Optional
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from openai import OpenAI
 from pydantic import BaseModel
 
@@ -12,6 +14,15 @@ app = FastAPI(
     title="图片处理 API",
     description="上传图片并使用 AI 处理",
     version="1.0.0"
+)
+
+# 添加 CORS 中间件，允许前端跨域访问
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 生产环境应该设置具体的域名
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -96,7 +107,13 @@ async def process_image_with_ai(image_bytes: bytes, content_type: str, prompt: s
 
 @app.get("/")
 async def root():
-    """API 根路径"""
+    """返回前端页面"""
+    return FileResponse("index.html")
+
+
+@app.get("/api")
+async def api_info():
+    """API 信息"""
     return {
         "service": "图片处理 API",
         "version": "1.0.0",
