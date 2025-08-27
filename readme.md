@@ -8,4 +8,6 @@
 
 docker 部署
 
-docker run --env-file settings.env --rm -it -p 8000:8000 wynemo/image-edit
+编写配置文件，参考 `settings.env.example`
+
+`docker run --env-file settings.env --rm -it -p 8000:8000 wynemo/image-edit`
