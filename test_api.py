@@ -6,6 +6,15 @@ from openai import OpenAI
 
 from config import settings
 
+
+def encode_image(image_path):
+    """将本地图片文件编码为base64格式的data URL"""
+    with open(image_path, "rb") as image_file:
+        import mimetypes
+        mime_type = mimetypes.guess_type(image_path)[0] or "image/jpeg"
+        base64_image = base64.b64encode(image_file.read()).decode('utf-8')
+        return f"data:{mime_type};base64,{base64_image}"
+
 client = OpenAI(
   base_url=settings.OPENAI_API_URL,
   api_key=settings.OPENAI_API_KEY,
@@ -19,12 +28,19 @@ completion = client.chat.completions.create(
       "content": [
         {
           "type": "text",
-          "text": "把这个弄成北条司漫画风格的, 现在一只手是拿着包，不用动，另外一只改为手捧着鲜红的玫瑰花"
+          "text": "把这个弄成北条司漫画风格的"
         },
         {
           "type": "image_url",
           "image_url": {
-            "url": "http://xxx.com"
+            # 方法1: 直接使用URL
+            # "url": "http://xxx.com"
+            
+            # 方法2: 本地文件转base64
+            # "url": f"data:image/png;base64,{base64.b64encode(open('path/to/image.png', 'rb').read()).decode()}"
+            
+            # 方法3: 使用辅助函数
+            "url": encode_image("/Users/tommygreen/Downloads/photo_2024-12-11_13-47-13.jpg")  # 需要定义 encode_image 函数
           }
         }
       ]
