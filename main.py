@@ -2,7 +2,7 @@ import base64
 from datetime import datetime
 from typing import Any, Dict, Optional
 
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from openai import OpenAI
@@ -127,7 +127,7 @@ async def api_info():
 @app.post("/process-image/", response_model=ImageProcessResponse)
 async def process_image(
     file: UploadFile = File(..., description="要处理的图片文件"),
-    prompt: str = "把这个弄成北条司漫画风格的"
+    prompt: str = Form(default="把这个弄成北条司漫画风格的", description="处理提示词")
 ):
     """
     上传图片并使用 AI 进行处理
@@ -164,6 +164,7 @@ async def process_image(
     
     try:
         # 处理图片
+        print("prompt is", prompt)
         result = await process_image_with_ai(contents, content_type, prompt)
         
         # 构造响应
