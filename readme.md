@@ -1,12 +1,14 @@
-生成图片的网站，调用api
+使用 gemini-2.5-flash-image-preview 编辑图片的网站，调用openrouter 的 api
 
-编辑一下 test_api.py 图片url 以及config.py里的 OPENAI_API_KEY
 
-然后 `uv sync`
+## 运行
 
-测试代码生成 `uv run test_api.py`
+`uv run main.py`
 
-docker 部署
+编辑一下config.py里的 OPENAI_API_KEY, 可以使用openrouter
+
+
+## docker 部署
 
 编写配置文件，参考 `settings.env.example`
 
