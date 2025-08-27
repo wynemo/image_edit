@@ -315,8 +315,8 @@
 
             <div class="upload-area" id="uploadArea">
                 <div class="upload-icon">📤</div>
-                <div class="upload-text">点击上传或拖拽图片到这里</div>
-                <div class="upload-hint">支持 JPG、PNG、GIF、WEBP 格式，最大 20MB</div>
+                <div class="upload-text">点击上传、拖拽或粘贴图片到这里</div>
+                <div class="upload-hint">支持 JPG、PNG、GIF、WEBP 格式，最大 20MB | 可使用 Ctrl+V 粘贴</div>
                 <input type="file" id="fileInput" accept="image/*" />
             </div>
         </div>
@@ -524,6 +524,29 @@
             previewSection.classList.remove('active');
             resultSection.classList.remove('active');
             hideMessages();
+        });
+
+        // 监听粘贴事件（支持剪切板图片）
+        document.addEventListener('paste', async (e) => {
+            const items = e.clipboardData.items;
+            
+            for (let item of items) {
+                if (item.type.startsWith('image/')) {
+                    e.preventDefault();
+                    
+                    const blob = item.getAsFile();
+                    if (blob) {
+                        // 创建一个 File 对象
+                        const file = new File([blob], 'clipboard-image.png', {
+                            type: blob.type || 'image/png'
+                        });
+                        
+                        handleFile(file);
+                        showSuccess('已从剪切板粘贴图片！');
+                    }
+                    break;
+                }
+            }
         });
 
         // 显示错误消息
