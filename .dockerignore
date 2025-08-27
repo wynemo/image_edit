@@ -15,6 +15,7 @@ __pycache__/
 
 # Secrets - 避免将包含密钥的文件打包进镜像
 setting.env
+settings.env
 
 # 文档
 *.md
