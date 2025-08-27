@@ -361,7 +361,10 @@
     </div>
 
     <script>
-        const API_URL = 'http://localhost:8000';
+        // 动态获取 API URL，如果是通过文件协议打开则使用 localhost:8000
+        const API_URL = window.location.protocol === 'file:' 
+            ? 'http://localhost:8000' 
+            : window.location.origin;
         
         // DOM 元素
         const uploadArea = document.getElementById('uploadArea');
