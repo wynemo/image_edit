@@ -7,6 +7,10 @@
 
 编辑一下config.py里的 OPENAI_API_KEY, 可以使用openrouter
 
+## 效果
+
+![](2025-08-27-17-42-49.png)
+
 
 ## docker 部署
 
