@@ -3,9 +3,11 @@
 
 ## 运行
 
+编辑一下config.py里的 OPENAI_API_KEY, 可以使用openrouter的
+
 `uv run main.py`
 
-编辑一下config.py里的 OPENAI_API_KEY, 可以使用openrouter
+然后访问 http://127.0.0.1:8000
 
 ## 效果
 
